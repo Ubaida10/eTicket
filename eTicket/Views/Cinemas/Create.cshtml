@@ -1,0 +1,73 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model eTicket.Models.Entity_Classes.Cinema
+
+@{
+    ViewData["Title"] = "Add a New Cinema";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - CineTix</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+</head>
+<body style="background-color: #f8f9fa;">
+    <div class="container mt-5">
+        <div class="row justify-content-around mb-5">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white text-center">
+                        <h2>Add a New Cinema</h2>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                            <div class="form-group text-center mb-4">
+                                <img id="ProfilePicturePreview" class="border border-info rounded-circle shadow-sm" style="max-width: 150px;" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Name" class="form-label">Cinema Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter cinema's name"/>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            
+                            
+                            <div class="form-group mb-3">
+                                <label asp-for="CinemaLogoUrl" class="form-label">Logo URL</label>
+                                <input asp-for="CinemaLogoUrl" class="form-control" placeholder="Enter the URL for the logo"/>
+                                <span asp-validation-for="CinemaLogoUrl" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="ContactInfo" class="form-label">Contact Info</label>
+                                <input asp-for="ContactInfo" class="form-control" placeholder="Enter cinema's Contact Info"/>
+                                <span asp-validation-for="ContactInfo" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label asp-for="Location" class="form-label">Location</label>
+                                <textarea asp-for="Location" class="form-control" rows="4" placeholder="Enter the location"></textarea>
+                                <span asp-validation-for="Location" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Description" class="form-label">Biography</label>
+                                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter a brief biography"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                <a class="btn btn-outline-secondary me-2" asp-action="Index">Show All</a>
+                                <input type="submit" value="Create" class="btn btn-success" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Models\Entity Classes\Pricing.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Pricing\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\Images\Actors\bale.jpg" />
+      <None Include="wwwroot\Images\Actors\leonardo.jpg" />
+      <None Include="wwwroot\Images\Producers\martin.jpg" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,99 @@
+@model eTicket.Data.Register
+
+@{
+    ViewData["Title"] = "Sign up for a new account";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body style="background-color: #f0f2f5;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row w-100 m-4">
+            <div class="col-md-6 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="card-title mb-4 text-center">Sign Up</h2>
+
+                        @if(TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                <span><b>Sorry!</b> - @TempData["Error"]</span>
+                            </div>
+                        }
+
+                        <form asp-action="Register">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <div class="mb-3">
+                                <label asp-for="FullName" class="form-label">Full Name</label>
+                                <input asp-for="FullName" class="form-control" placeholder="Full Name" />
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="EmailAddress" class="form-label">Email Address</label>
+                                <input asp-for="EmailAddress" class="form-control" placeholder="Email Address" />
+                                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-100">Register</button>
+                            </div>
+                            <div class="text-center mb-3">
+                                <p class="mb-0">Or Register with:</p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="https://www.google.com" target="_blank" class="mx-2">
+                                    <button type="button" class="btn btn-outline-dark">
+                                        <i class="fab fa-google"></i> Google
+                                    </button>
+                                </a>
+
+                                <a href="https://www.facebook.com" target="_blank" class="mx-2">
+                                    <button type="button" class="btn btn-outline-primary">
+                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    </button>
+                                </a>
+
+                                <a href="https://www.twitter.com" target="_blank" class="mx-2">
+                                    <button type="button" class="btn btn-outline-info">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </button>
+                                </a>
+
+                                <a href="https://www.instagram.com" target="_blank" class="mx-2">
+                                    <button type="button" class="btn btn-outline-success">
+                                        <i class="fab fa-instagram"></i> Insta
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a class="btn btn-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>

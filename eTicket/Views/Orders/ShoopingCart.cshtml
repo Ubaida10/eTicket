@@ -1,0 +1,46 @@
+@model List<eTicket.Data.Cart>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Image</th>
+        <th scope="col">User</th>
+        <th scope="col">Total Items</th>
+        <th scope="col">Total Quantity</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Date Added</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@item.Items.First().Movie.ImageUrl" class="img-fluid rounded-start" alt="Movie Image" style="max-width: 100px;">
+            </td>
+            <td>
+                @item.User.Name
+            </td>
+            <td>
+                @item.Items.Count
+            </td>
+            <td>
+                @{
+                    int amount = 0;
+                    foreach (var it in item.Items)
+                    {
+                        amount += it.Amount;
+                    }
+                    @amount
+                }
+            </td>
+            <td>
+                @item.Total.ToString("c")
+            </td>
+            <td>
+                @item.DateAdded.ToString("dd MMM yyyy")
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
