@@ -21,13 +21,10 @@
         <div class="d-flex flex-row flex-wrap justify-content-around mb-5">
             @foreach (var movies in Model)
             {
-                <div class="card me-3 mb-3" style="width: 18rem;">
-                    <img src="@movies.ImageUrl" class="card-img-top" alt="@movies.Title" style="height: 27rem; width: 18rem;">
-                    <div class="card-body text">
-                        <h5 class="card-title">@movies.Title</h5>
-                        <p class="card-text justify-content-evenly">@movies.Synopsis.Substring(0, 100)</p>
-                        <a href="#" class="btn btn-primary">More</a>
-                    </div>
+                <div class="card me-3 mb-3" style="width: 18rem; background-color: transparent">
+                    <a href="@Url.Action("Details", "Movies", new { id = movies.Id })" class="btn">
+                        <img src="@movies.ImageUrl" class="card-img-top" alt="@movies.Title" style="height: 27rem; width: 18rem;">
+                    </a>
                 </div>
             }
         </div>
@@ -37,3 +34,4 @@
         <p>No movies available.</p>
     }
 </div>
+}

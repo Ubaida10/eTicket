@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using eTicket.Models;
+using eTicket.Models.Entity_Classes;
+using eTicket.Models.Repositories;
 
 namespace eTicket.Controllers;
 
@@ -15,7 +17,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        MovieRepository moviesRepository = new MovieRepository();
+        var movies = moviesRepository.GetAllMovies();
+        return View(movies);
     }
 
     public IActionResult Privacy()

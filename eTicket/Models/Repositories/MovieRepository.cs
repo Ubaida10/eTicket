@@ -76,6 +76,59 @@ public class MovieRepository : IMovieRepository
         }
     }
 
+    public Movie GetMovieByName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentException("Search name cannot be null or empty", nameof(name));
+        }
+
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            Movie movie = null; // Use null initially if no movie is found
+            string query = @"
+            SELECT m.Id, m.Title, m.Synopsis, m.Duration, m.ReleaseDate, m.Price, m.ImageUrl, 
+                   m.RottenTomatoScore, m.Genre, m.CinemaId, m.ProducerId, 
+                   c.Name AS CinemaName, p.Name AS ProducerName
+            FROM Movies m
+            INNER JOIN Cinemas c ON m.CinemaId = c.Id
+            INNER JOIN Producers p ON m.ProducerId = p.Id
+            WHERE m.Title = @name";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@name", name);
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        movie = new Movie
+                        {
+                            Id = reader.GetInt32(0),
+                            Title = reader.GetString(1),
+                            Synopsis = reader.GetString(2),
+                            Duration = reader.GetTimeSpan(3),
+                            ReleaseDate = reader.GetDateTime(4),
+                            Price = reader.GetDecimal(5),
+                            ImageUrl = reader.GetString(6),
+                            RottenTomatoScore = reader.GetInt32(7),
+                            Genre = (Genre)reader.GetInt32(8),
+                            CinemaId = reader.GetInt32(9),
+                            ProducerId = reader.GetInt32(10)
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            return movie;
+        }
+    }
+
 
 
     public IEnumerable<Movie> GetAllMovies()

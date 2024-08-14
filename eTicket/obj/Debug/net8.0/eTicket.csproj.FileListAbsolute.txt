@@ -66,3 +66,4 @@ C:\Users\abuub\RiderProjects\eTicket\eTicket\obj\Debug\net8.0\refint\eTicket.dll
 C:\Users\abuub\RiderProjects\eTicket\eTicket\obj\Debug\net8.0\eTicket.pdb
 C:\Users\abuub\RiderProjects\eTicket\eTicket\obj\Debug\net8.0\eTicket.genruntimeconfig.cache
 C:\Users\abuub\RiderProjects\eTicket\eTicket\obj\Debug\net8.0\ref\eTicket.dll
+C:\Users\abuub\RiderProjects\eTicket\eTicket\obj\Debug\net8.0\eTicket.sourcelink.json

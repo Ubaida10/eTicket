@@ -33,7 +33,7 @@ public class MoviesController : Controller
         return View();
     }
     
-    public IActionResult Details()
+    public IActionResult Details(int id)
     {
         Movie movie = new Movie();
         MovieRepository movieRepository = new MovieRepository();
@@ -44,13 +44,36 @@ public class MoviesController : Controller
         var producersRepo = new ProducerRepository();
         var actorsRepo = new ActorRepository();
         
-        movie = movieRepository.GetMovieById(12);
+        movie = movieRepository.GetMovieById(id);
         movie.Cinema = cinemaRepo.GetCinemaById(movie.CinemaId);
         movie.Producer = producersRepo.GetProducerById(movie.ProducerId);
         
         return View(movie);
     }
-    
+
+    public IActionResult Search(string searchString)
+    {
+        Movie movie = new Movie();
+        MovieRepository movieRepository = new MovieRepository();
+        movie.Cinema = new Cinema();
+        movie.Producer = new Producer();
+        
+        var cinemaRepo = new CinemaRepository();
+        var producersRepo = new ProducerRepository();
+        var actorsRepo = new ActorRepository();
+        
+        movie = movieRepository.GetMovieByName(searchString);
+        if (movie == null)
+        {
+            return RedirectToAction("MovieNotFound");
+        }
+        movie.Cinema = cinemaRepo.GetCinemaById(movie.CinemaId);
+        movie.Producer = producersRepo.GetProducerById(movie.ProducerId);
+        
+
+        return View("Details", movie);
+    }
+
     public IActionResult Edit()
     {
         var cinemaRepo = new CinemaRepository();
@@ -65,6 +88,11 @@ public class MoviesController : Controller
         ViewBag.Producers = new SelectList(producers, "Id", "Name");
         ViewBag.Actors = new MultiSelectList(actors, "Id", "Name");
 
+        return View();
+    }
+    
+    public IActionResult MovieNotFound()
+    {
         return View();
     }
 }
