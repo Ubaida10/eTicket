@@ -15,13 +15,13 @@
 
 
 <div class="container px-2">
-    <h1 class="my-4 text-center">Movies</h1>
+    <h1 class="my-4 text-center" style="color: white">Movies</h1>
     @if (Model.Any())
     {
         <div class="d-flex flex-row flex-wrap justify-content-around mb-5">
             @foreach (var movies in Model)
             {
-                <div class="card me-3 mb-3" style="width: 18rem; background-color: transparent">
+                <div class="card me-3 mb-3" style="width: 18rem; background-color: transparent; border: none">
                     <a href="@Url.Action("Details", "Movies", new { id = movies.Id })" class="btn">
                         <img src="@movies.ImageUrl" class="card-img-top" alt="@movies.Title" style="height: 27rem; width: 18rem;">
                     </a>
@@ -34,4 +34,3 @@
         <p>No movies available.</p>
     }
 </div>
-}

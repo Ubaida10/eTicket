@@ -35,13 +35,13 @@
                         <a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Index" style="color: #f7e7ce"><i class="bi bi-film"></i> Movies</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #f7e7ce">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #800020;color: white">
                             <i class="bi bi-gear"></i> Management
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" style="color: #f7e7ce" asp-controller="Cinemas" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a></li>
-                            <li><a class="dropdown-item" style="color: #f7e7ce" asp-controller="Producers" asp-action="Index"><i class="bi bi-headset"></i> Producers</a></li>
-                            <li><a class="dropdown-item" style="color: #f7e7ce" asp-controller="Actors" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: white;">
+                            <li><a class="dropdown-item" style="color: black" asp-controller="Cinemas" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a></li>
+                            <li><a class="dropdown-item" style="color: black" asp-controller="Producers" asp-action="Index"><i class="bi bi-headset"></i> Producers</a></li>
+                            <li><a class="dropdown-item" style="color: black" asp-controller="Actors" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -63,7 +63,7 @@
                     <li class="nav-item dropdown">
                         <div class="input-group">
                             <!-- Icon container -->
-                            <span class="input-group-text bg-transparent">
+                            <span class="input-group-text bg-transparent" style="border: none">
                                 <i class="fas fa-user" style="color: #dcdcdcfa"></i>
                             </span>
                             <!-- Dropdown toggle button -->
@@ -71,9 +71,9 @@
                                 <i class="bi bi-person-circle"></i> Account
                             </a>
                             <!-- Dropdown menu -->
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Login"><i class="bi bi-box-arrow-in-right"></i> Sign In</a></li>
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="bi bi-pencil-square"></i> Register</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown" style="background-color: white">
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Login" style="color: black"><i class="bi bi-box-arrow-in-right"></i> Sign In</a></li>
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Register" style="color: black"><i class="bi bi-pencil-square"></i> Register</a></li>
                             </ul>
                         </div>
                     </li>

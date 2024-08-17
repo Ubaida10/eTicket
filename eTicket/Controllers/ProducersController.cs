@@ -14,26 +14,52 @@ public class ProducersController : Controller
         return View(producers);
     }
     
+    [HttpGet]
     public IActionResult Create()
     {
         return View(new Producer());
     }
 
-    public IActionResult Delete()
+    [HttpPost]
+    public IActionResult Create(Producer producer)
     {
-        return View(new Producer());
+        ProducerRepository producerRepository = new ProducerRepository();
+        producerRepository.AddProducer(producer);
+        return RedirectToAction("Index");
     }
     
-    public IActionResult Edit()
+    [HttpGet]
+    public IActionResult Edit(int id)
     {
-        return View(new Producer());
+        ProducerRepository producerRepo = new ProducerRepository();
+        var producer = producerRepo.GetProducerById(id);
+        if (producer== null)
+        {
+            return RedirectToAction("ProducerNotFound");
+        }
+        return View(producer);
+    }
+    
+    [HttpPost]
+    public IActionResult Edit(Producer producer)
+    {
+        ProducerRepository producerRepo = new ProducerRepository();
+        producerRepo.UpdateProducer(producer);
+        return RedirectToAction("Index");
     }
 
-    public IActionResult Details()
+    public IActionResult Details(int id)
     {
         ProducerRepository producerRepo = new ProducerRepository();
         Producer producer = new Producer();
-        producer = producerRepo.GetProducerById(2);
+        producer = producerRepo.GetProducerById(id);
         return View(producer);
+    }
+    
+    public IActionResult Delete(int id)
+    {
+        ProducerRepository producerRepo = new ProducerRepository();
+        producerRepo.DeleteProducer(id);
+        return RedirectToAction("Index");
     }
 }

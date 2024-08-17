@@ -3,7 +3,7 @@
 @model eTicket.Data.NewMovie
 
 @{
-    ViewData["Title"] = "Add a New Movie";
+    ViewData["Title"] = "Editing Movie";
 }
 
 <!DOCTYPE html>
@@ -15,54 +15,70 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5" style="background-color: #F5F5DC;">
             <div class="col-md-8">
-                <h2 class="text-center mb-4">@ViewData["Title"]</h2>
-                <form asp-action="Create">
+                <h1 class="text-center mb-4 mt-5" style="color: #800020">@ViewData["Title"]</h1>
+                <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label asp-for="Title" class="form-label">Movie Name</label>
-                                <input asp-for="Title" class="form-control" />
+                                <label asp-for="Title" class="form-label" style="color: #800020">Movie Name</label>
+                                <input asp-for="Title" class="form-control" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" placeholder="Enter the new name"/>
                                 <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="ReleaseDate" class="form-label">Release Date</label>
-                                <input asp-for="ReleaseDate" type="date" class="form-control" />
+                                <label asp-for="ReleaseDate" class="form-label" style="color: #800020">Release Date</label>
+                                <input asp-for="ReleaseDate" type="date" class="form-control" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;"/>
                                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="Price" class="form-label">Price ($)</label>
-                                <input asp-for="Price" type="number" step="1.00" min="0" class="form-control" />
+                                <label asp-for="Price" class="form-label" style="color: #800020">Price ($)</label>
+                                <input asp-for="Price" type="number" step="1.00" min="0" class="form-control" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" placeholder="Enter the new price"/>
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="ImageUrl" class="form-label">Movie Poster URL</label>
-                                <input asp-for="ImageUrl" class="form-control" />
+                                <label asp-for="Hours" class="form-label" style="color: #800020">Duration (Hours)</label>
+                                <input asp-for="Hours" type="number" step="1" min="0" class="form-control" style="background-color: transparent; border: none; border-bottom: 2px solid #800020; color: black;" placeholder="Hours" />
+                                <span asp-validation-for="Hours" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Minutes" class="form-label" style="color: #800020">Duration (Minutes)</label>
+                                <input asp-for="Minutes" type="number" step="1" min="0" max="59" class="form-control" style="background-color: transparent; border: none; border-bottom: 2px solid #800020; color: black;" placeholder="Minutes" />
+                                <span asp-validation-for="Minutes" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="RottenTomatoScore" class="form-label" style="color: #800020">Rating</label>
+                                <input asp-for="RottenTomatoScore" type="number" step="0.5" min="0" class="form-control" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="ImageUrl" class="form-label" style="color: #800020">Movie Poster URL</label>
+                                <input asp-for="ImageUrl" class="form-control" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" placeholder="Enter the URL of the image"/>
                                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label asp-for="CinemaId" class="form-label">Cinema</label>
-                                <select asp-for="CinemaId" class="form-select" asp-items="ViewBag.Cinemas"></select>
+                                <label asp-for="CinemaId" class="form-label" style="color: #800020">Cinema</label>
+                                <select asp-for="CinemaId" class="form-select" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" asp-items="ViewBag.Cinemas"></select>
                                 <span asp-validation-for="CinemaId" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="Genre" class="form-label">Genre</label>
-                                <select asp-for="Genre" class="form-select" asp-items="Html.GetEnumSelectList<Genre>()"></select>
+                                <label asp-for="Genre" class="form-label" style="color: #800020">Genre</label>
+                                <select asp-for="Genre" class="form-select" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" asp-items="Html.GetEnumSelectList<Genre>()"></select>
                                 <span asp-validation-for="Genre" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="ActorId" class="form-label">Actors</label>
-                                <select asp-for="ActorId" class="form-select" asp-items="ViewBag.Actors"></select>
+                                <label asp-for="ActorId" class="form-label" style="color: #800020">Actors</label>
+                                <select asp-for="ActorId" class="form-select" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" asp-items="ViewBag.Actors"></select>
                                 <span asp-validation-for="ActorId" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="ProducerId" class="form-label">Producer</label>
-                                <select asp-for="ProducerId" class="form-select" asp-items="ViewBag.Producers"></select>
+                                <label asp-for="ProducerId" class="form-label" style="color: #800020">Producer</label>
+                                <select asp-for="ProducerId" class="form-select" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;" asp-items="ViewBag.Producers"></select>
                                 <span asp-validation-for="ProducerId" class="text-danger"></span>
                             </div>
                         </div>
@@ -73,14 +89,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Synopsis" class="form-label">Synopsis</label>
-                        <textarea asp-for="Synopsis" class="form-control" rows="4"></textarea>
+                        <label asp-for="Synopsis" class="form-label" style="color: #800020">Synopsis</label>
+                        <textarea asp-for="Synopsis" class="form-control" rows="4" placeholder="Enter the synopsis" style="background-color: transparent;border: none;border-bottom: 2px solid #800020; color:black;"></textarea>
                         <span asp-validation-for="Synopsis" class="text-danger"></span>
                     </div>
 
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary me-2">Create</button>
-                        <a class="btn btn-secondary" asp-action="Index">Show all</a>
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn mt-3 mb-4" style="background-color: #800020; border-radius: 30px;color: white">Update</button>
                     </div>
                 </form>
             </div>

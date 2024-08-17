@@ -1,3 +1,4 @@
+using eTicket.Data;
 using eTicket.Models.Entity_Classes;
 
 namespace eTicket.Models.Interfaces;
@@ -5,15 +6,15 @@ namespace eTicket.Models.Interfaces;
 public interface IMovieRepository
 {
     //Create
-    void AddMovie(Movie movie);
+    void AddMovie(NewMovie movie);
 
     //Read
     Movie GetMovieById(int id);
     IEnumerable<Movie> GetAllMovies();
     
     //Update
-    void UpdateMovie(Movie movie);
+    void UpdateMovie(NewMovie movie);
     
     //Delete
-    void DeleteMovie(Movie movie);
+    void DeleteMovie(int id);
 }

@@ -14,9 +14,19 @@ public class NewMovie
     [Required(ErrorMessage = "Description is required")]
     public string Synopsis { get; set; }
 
+    [Display(Name = "Movie duration")]
+    [Required(ErrorMessage = "Duration is required")]
+    public int Hours { get; set; }
+    [Required(ErrorMessage = "Duration is required")]
+    public int Minutes { get; set; }
+    public TimeSpan Duration  {get;set;}
     [Display(Name = "Price in $")]
     [Required(ErrorMessage = "Price is required")]
-    public double Price { get; set; }
+    public decimal Price { get; set; }
+    
+    [Display(Name = "Rotten Tomato Score")]
+    [Required(ErrorMessage = "Rotten Tomato Score is required")]
+    public double RottenTomatoScore { get; set; }
 
     [Display(Name = "Movie poster URL")]
     [Required(ErrorMessage = "Movie poster URL is required")]

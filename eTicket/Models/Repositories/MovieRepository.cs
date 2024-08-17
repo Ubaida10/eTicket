@@ -14,7 +14,7 @@ public class MovieRepository : IMovieRepository
         _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=eTicketProject;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
     }
 
-    public void AddMovie(Movie movie)
+    public void AddMovie(NewMovie movie)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
@@ -164,11 +164,11 @@ public class MovieRepository : IMovieRepository
         }
     }
 
-    public void UpdateMovie(Movie movie)
+    public void UpdateMovie(NewMovie movie)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = @"UPDATE Movies SET Title = @Title, Synopsis = @Synopsis, Duration = @Duration, ReleaseDate = @ReleaseDate, Price = @Price, ImageUrl = @ImageUrl, RottenTomatoScore = @RottenTomatoScore, Genre = @Genre, ProducerID = @ProducerID, CinemaID = @CinemaID WHERE Id = @Id";
+            string query = @"UPDATE Movies SET Title = @Title, Synopsis = @Synopsis, Duration = @Duration, ReleaseDate = @ReleaseDate, Price = @Price, ImageUrl = @ImageUrl, RottenTomatoScore = @RottenTomatoScore, Genre = @Genre, ProducerID = @ProducerID, CinemaID = @CinemaID, ActorID = @ActorID WHERE Id = @Id";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Id", movie.Id);
             command.Parameters.AddWithValue("@Title", movie.Title);
@@ -181,6 +181,7 @@ public class MovieRepository : IMovieRepository
             command.Parameters.AddWithValue("@Genre", movie.Genre);
             command.Parameters.AddWithValue("@ProducerID", movie.ProducerId);
             command.Parameters.AddWithValue("@CinemaID", movie.CinemaId);
+            command.Parameters.AddWithValue("@ActorID", movie.ActorId); 
             
             connection.Open();
             command.ExecuteNonQuery();
@@ -188,13 +189,13 @@ public class MovieRepository : IMovieRepository
         }
     }
 
-    public void DeleteMovie(Movie movie)
+    public void DeleteMovie(int id)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string query = @"DELETE FROM Movies WHERE Id = @Id";
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Id", movie.Id);
+            command.Parameters.AddWithValue("@Id", id);
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();

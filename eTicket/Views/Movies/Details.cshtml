@@ -63,6 +63,12 @@
                         }
                     </ul>
                 </p>
+                    <div class="mt-4">
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                        <form asp-controller="Movies" asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
             </div>
         </div>
     </div>

@@ -16,5 +16,5 @@ public interface IProducerRepository
     void UpdateProducer(Producer producer);
     
     //Delete
-    void DeleteProducer(Producer producer);
+    void DeleteProducer(int id);
 }

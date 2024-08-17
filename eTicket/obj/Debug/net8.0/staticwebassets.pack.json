@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\Icons\\search.png"
     },
     {
+      "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Actors\\MD.jpg",
+      "PackagePath": "staticwebassets\\Images\\Actors\\MD.jpg"
+    },
+    {
       "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Actors\\bale.jpg",
       "PackagePath": "staticwebassets\\Images\\Actors\\bale.jpg"
     },
@@ -41,12 +45,20 @@
       "PackagePath": "staticwebassets\\Images\\Movies\\Intersteller.jpg"
     },
     {
+      "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Movies\\TDK.jpg",
+      "PackagePath": "staticwebassets\\Images\\Movies\\TDK.jpg"
+    },
+    {
       "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Movies\\prestige.jpg",
       "PackagePath": "staticwebassets\\Images\\Movies\\prestige.jpg"
     },
     {
       "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Movies\\shutter_island.jpg",
       "PackagePath": "staticwebassets\\Images\\Movies\\shutter_island.jpg"
+    },
+    {
+      "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Producers\\DV.jpg",
+      "PackagePath": "staticwebassets\\Images\\Producers\\DV.jpg"
     },
     {
       "Id": "C:\\Users\\abuub\\RiderProjects\\eTicket\\eTicket\\wwwroot\\Images\\Producers\\martin.jpg",

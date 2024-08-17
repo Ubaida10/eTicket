@@ -16,7 +16,7 @@ public class ProducerRepository : IProducerRepository
     public void AddProducer(Producer producer)
     {
         using SqlConnection connection = new SqlConnection(_connectionString);
-        string query = "INSERT INTO Producers(ProfilePictureUrl, Name, DateOfBirth, Biography) VALUES (@ProfilePicture, @Name, @DateOfBirth, @Biography); SELECT SCOPE_IDENTITY()";
+        string query = "INSERT INTO Producers(ProfilePicture, Name, DateOfBirth, Biography) VALUES (@ProfilePicture, @Name, @DateOfBirth, @Biography); SELECT SCOPE_IDENTITY()";
         SqlCommand command = new SqlCommand(query, connection);
         
         command.Parameters.AddWithValue("@ProfilePicture", producer.ProfilePictureUrl);
@@ -108,7 +108,7 @@ public class ProducerRepository : IProducerRepository
     public void UpdateProducer(Producer producer)
     {
         using SqlConnection connection = new SqlConnection(_connectionString);
-        string query = "UPDATE Producers SET ProfilePictureUrl = @ProfilePicture, Name = @Name, DateOfBirth = @DateOfBirth, Biography = @Biography WHERE Id = @Id";
+        string query = "UPDATE Producers SET ProfilePicture = @ProfilePicture, Name = @Name, DateOfBirth = @DateOfBirth, Biography = @Biography WHERE Id = @Id";
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Id", producer.Id);
         command.Parameters.AddWithValue("@ProfilePicture", producer.ProfilePictureUrl);
@@ -120,12 +120,12 @@ public class ProducerRepository : IProducerRepository
         connection.Close();
     }
 
-    public void DeleteProducer(Producer producer)
+    public void DeleteProducer(int id)
     {
         using SqlConnection connection = new SqlConnection(_connectionString);
         string query = "DELETE FROM Producers WHERE Id = @Id";
         SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@Id", producer.Id);
+        command.Parameters.AddWithValue("@Id", id);
         connection.Open();
         command.ExecuteNonQuery();
         connection.Close();

@@ -1,5 +1,6 @@
 using eTicket.Models.Entity_Classes;
 using eTicket.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTicket.Controllers;
@@ -14,26 +15,56 @@ public class ActorsController : Controller
         return View(acts);
     }
 
+    [HttpGet]
     public IActionResult Create()
     {
         return View(new Actor());
     }
     
-    public IActionResult Delete(string name)
+    public IActionResult Create(Actor actor)
     {
-        return View(new Actor());
+        ActorRepository actors = new ActorRepository();
+        actors.AddActor(actor);
+        return RedirectToAction("Index");
     }
     
-    public IActionResult Edit(string name)
+    [HttpGet]
+    public IActionResult Edit(int id)
     {
-        return View(new Actor());
+        ActorRepository actorRepo = new ActorRepository();
+        var actor = actorRepo.GetActorById(id);
+        if (actor == null)
+        {
+            return RedirectToAction("ActorNotFound");
+        }
+        return View(actor);
     }
 
-    public IActionResult Details()
+    [HttpPost]
+    public IActionResult Edit(Actor actor)
+    {
+        ActorRepository actorRepo = new ActorRepository();
+        actorRepo.UpdateActor(actor);
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Details(int id)
     {
         Actor actor = new Actor();
         ActorRepository actorRepository = new ActorRepository();
-        actor = actorRepository.GetActorById(2);
+        actor = actorRepository.GetActorById(id);
         return View(actor);
+    }
+    
+    public IActionResult Delete(int id)
+    {
+        ActorRepository actorRepository = new ActorRepository();
+        actorRepository.DeleteActor(id);
+        return RedirectToAction("Index");
+    }
+    
+    public IActionResult ActorNotFound()
+    {
+        return View();
     }
 }
