@@ -1,4 +1,5 @@
 using eTicket.Models.Entity_Classes;
+using eTicket.Models.Interfaces;
 using eTicket.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +7,16 @@ namespace eTicket.Controllers;
 
 public class ProducersController : Controller
 {
+    private readonly IProducerRepository _producerRepository;
+    
+    public ProducersController(IProducerRepository producerRepository)
+    {
+        _producerRepository = producerRepository;
+    }
     // GET
     public IActionResult Index()
     {
-        ProducerRepository producerRepository = new ProducerRepository();
-        var producers = producerRepository.GetAllProducers();
+        var producers = _producerRepository.GetAllProducers();
         return View(producers);
     }
     
@@ -23,16 +29,14 @@ public class ProducersController : Controller
     [HttpPost]
     public IActionResult Create(Producer producer)
     {
-        ProducerRepository producerRepository = new ProducerRepository();
-        producerRepository.AddProducer(producer);
+        _producerRepository.AddProducer(producer);
         return RedirectToAction("Index");
     }
     
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        ProducerRepository producerRepo = new ProducerRepository();
-        var producer = producerRepo.GetProducerById(id);
+        var producer = _producerRepository.GetProducerById(id);
         if (producer== null)
         {
             return RedirectToAction("ProducerNotFound");
@@ -43,23 +47,21 @@ public class ProducersController : Controller
     [HttpPost]
     public IActionResult Edit(Producer producer)
     {
-        ProducerRepository producerRepo = new ProducerRepository();
-        producerRepo.UpdateProducer(producer);
+        
+        _producerRepository.UpdateProducer(producer);
         return RedirectToAction("Index");
     }
 
     public IActionResult Details(int id)
     {
-        ProducerRepository producerRepo = new ProducerRepository();
         Producer producer = new Producer();
-        producer = producerRepo.GetProducerById(id);
+        producer = _producerRepository.GetProducerById(id);
         return View(producer);
     }
     
     public IActionResult Delete(int id)
     {
-        ProducerRepository producerRepo = new ProducerRepository();
-        producerRepo.DeleteProducer(id);
+        _producerRepository.DeleteProducer(id);
         return RedirectToAction("Index");
     }
 }

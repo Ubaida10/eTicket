@@ -11,11 +11,18 @@
 
 @{
     ViewData["Title"] = "List of Movies";
+    var userRole = Context.Session.GetString("UserRole");
 }
 
 
 <div class="container px-2">
     <h1 class="my-4 text-center" style="color: white">Movies</h1>
+    @if (userRole == "admin")
+    {
+        <div class="text-end mb-5">
+            <a href="@Url.Action("Create", "Movies")" class="btn btn-primary">Add New Movie</a>
+        </div>
+    }
     @if (Model.Any())
     {
         <div class="d-flex flex-row flex-wrap justify-content-around mb-5">

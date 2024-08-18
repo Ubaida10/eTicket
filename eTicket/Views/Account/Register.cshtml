@@ -32,9 +32,14 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                             <div class="mb-3">
-                                <label asp-for="FullName" class="form-label" style="color: #800020">Full Name</label>
-                                <input asp-for="FullName" class="form-control" style="background-color: transparent;border: none; border-bottom: 2px solid #800020;" placeholder="Enter your Full Name" />
-                                <span asp-validation-for="FullName" class="text-danger"></span>
+                                <label asp-for="FirstName" class="form-label" style="color: #800020">First Name</label>
+                                <input asp-for="FirstName" class="form-control" style="background-color: transparent;border: none; border-bottom: 2px solid #800020;" placeholder="Enter your First Name" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="LastName" class="form-label" style="color: #800020">Last Name</label>
+                                <input asp-for="LastName" class="form-control" style="background-color: transparent;border: none; border-bottom: 2px solid #800020;" placeholder="Enter your Last Name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="EmailAddress" class="form-label" style="color: #800020">Email Address</label>

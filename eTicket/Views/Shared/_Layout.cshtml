@@ -71,10 +71,21 @@
                                 <i class="bi bi-person-circle"></i> Account
                             </a>
                             <!-- Dropdown menu -->
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown" style="background-color: white">
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Login" style="color: black"><i class="bi bi-box-arrow-in-right"></i> Sign In</a></li>
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Register" style="color: black"><i class="bi bi-pencil-square"></i> Register</a></li>
-                            </ul>
+                            @{
+                                if (Context.Session.GetString("UserEmail") == null)
+                                {
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown" style="background-color: white">
+                                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Login" style="color: black"><i class="bi bi-box-arrow-in-right"></i> Sign In</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Register" style="color: black"><i class="bi bi-pencil-square"></i> Register</a></li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown" style="background-color: white">
+                                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Dashboard" style="color: black"><i class="bi bi-box-arrow-in-right"></i>Dashboard</a></li>
+                                    </ul>
+                                }
+                            }
                         </div>
                     </li>
                 </ul>

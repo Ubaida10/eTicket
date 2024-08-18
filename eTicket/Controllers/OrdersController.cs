@@ -1,5 +1,6 @@
 using eTicket.Data;
 using eTicket.Models.Entity_Classes;
+using eTicket.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTicket.Controllers;
@@ -17,21 +18,45 @@ public class OrdersController: Controller
         return View();
     }
     
-    public IActionResult ShoopingCart()
+    public IActionResult ShopingCart(int movieId)
     {
-        Cart cart = new Cart();
-        cart.CartId = "1";
-        cart.DateAdded = DateTime.Now;
-        cart.Items = new List<ShoppingCartItem>
+        // Create an instance of the repository
+        var movieRepository = new MovieRepository();
+    
+        // Retrieve the movie from the repository
+        var movie = movieRepository.GetMovieById(movieId);
+    
+        // Check if the movie was found
+        if (movie == null)
         {
-            new ShoppingCartItem { Movie = new Movie { Title = "Shutter Island", Price = 12 }, Amount = 1 },
-            new ShoppingCartItem { Movie = new Movie { Title = "The Prestige", Price = 15 }, Amount = 2 },
+            // Handle the case when the movie is not found
+            return NotFound();
+        }
+
+        // Create a new cart instance
+        Cart cart = new Cart
+        {
+            CartId = "1", // Generate or retrieve the CartId dynamically
+            User = new ApplicationUser { Name = "Abubakar" }, // Assign a real user dynamically
+            Items = new List<ShoppingCartItem>
+            {
+                new ShoppingCartItem
+                {
+                    Movie = movie, // Use the existing movie object
+                    Amount = 1
+                }
+            }
         };
-        cart.Total = cart.Items.Sum(item => item.Movie.Price * item.Amount);
-        cart.User = new ApplicationUser();
-        cart.User.Name = "Abubakar";
-        var orders = new List<Cart>();
-        orders.Add(cart);
-        return View(orders);
+
+        // Create a list of carts and add the cart to it
+        var carts = new List<Cart> { cart };
+
+        // Return the view with the carts list
+        return View(carts);
+    }
+    
+    public IActionResult RemoveFromCart(int id)
+    {
+        return View();
     }
 }

@@ -1,5 +1,7 @@
 using System.Data;
+using System.Net;
 using eTicket.Data;
+using eTicket.Models.Interfaces;
 using eTicket.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +9,11 @@ namespace eTicket.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public AccountController()
+        public AccountController(IUserRepository repository)
         {
-            _repository = new UserRepository();
+            _repository = repository;
         }
 
         [HttpPost]
@@ -19,10 +21,18 @@ namespace eTicket.Controllers
         {
             var userTable = _repository.GetUsers();
             DataRow foundUser = null;
+            
+            //default value is user
+            string role = "user";
+            string firstName = null;
+            string lastName = null;
             foreach (DataRow user in userTable.Rows)
             {
                 if (user["Email"].ToString() == loginModel.Email && user["Password"].ToString() == loginModel.Password)
                 {
+                    role = user["Role"].ToString();
+                    firstName = user["FirstName"].ToString();
+                    lastName = user["LastName"].ToString();
                     foundUser = user;
                     break;
                 }
@@ -44,11 +54,16 @@ namespace eTicket.Controllers
                 Response.Cookies.Append("Email", loginModel.Email, cookieOption);
                 Response.Cookies.Append("Password", loginModel.Password, cookieOption);
             }
-
             // Redirect to a different page indicating successful login
-            return RedirectToAction("LoginComplete");
+            HttpContext.Session.SetString("UserEmail", loginModel.Email);
+            HttpContext.Session.SetString("UserRole", role);
+            HttpContext.Session.SetString("FirstName", firstName);
+            HttpContext.Session.SetString("LastName", lastName);
+            HttpContext.Session.SetString("Password", loginModel.Password);
+            
+            return RedirectToAction("Index","Home");
         }
-
+        
         // GET
         public IActionResult Login()
         {
@@ -116,6 +131,71 @@ namespace eTicket.Controllers
         public IActionResult Register()
         {
             return View(new Register());
+        }
+        public IActionResult Dashboard()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+        
+        public IActionResult Logout()
+        {
+            //Clear the session
+            HttpContext.Session.Clear();
+            
+            //Redirect to homepage
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ViewProfile()
+        {
+            return View();
+        }
+        
+        [HttpGet("Account/Edit/{id}")]
+        public IActionResult Edit(string id)
+        {
+            DataTable userTable = _repository.GetUsers();
+            foreach (DataRow row in userTable.Rows)
+            {
+                if(row["Email"].ToString() == id)
+                {
+                    var editUser = new Register();
+                    //editUser.Id = Convert.ToInt32(row["Id"]);
+                    editUser.EmailAddress = row["Email"].ToString();
+                    editUser.FirstName = row["FirstName"].ToString();
+                    editUser.LastName = row["LastName"].ToString();
+                    editUser.Password = row["Password"].ToString();
+                    return View("Edit", editUser);
+                }
+            }
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Register register)
+        {
+            _repository.Edit(register);
+            return RedirectToAction("Index","Home");
+        }
+        
+        public IActionResult Delete()
+        {
+            if (!String.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
+            {
+                var user = HttpContext.Session.GetString("UserEmail");
+                if (user != null)
+                {
+                    _repository.Delete(user);
+                    HttpContext.Session.Clear();
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

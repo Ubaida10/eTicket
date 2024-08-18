@@ -2,10 +2,17 @@
 
 @{
     ViewData["Title"] = "List Of Actors";
+    var userRole = Context.Session.GetString("UserRole");
 }
 
 <div class="container">
     <h1 class="my-4 text-center" style="color: #F5F5DC;">Actors</h1>
+    @if (userRole == "admin")
+    {
+        <div class="text-end mb-5">
+            <a href="@Url.Action("Create", "Actors")" class="btn btn-primary">Add New Actor</a>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <table class="table" style="color: #F5F5DC">
@@ -32,12 +39,16 @@
                                 <a href="@Url.Action("Details", "Actors", new { id = actor.Id })" class="btn btn-outline-info mb-2">
                                     <i class="bi bi-eye"></i> Details
                                 </a>
-                                <a href="@Url.Action("Edit", "Actors", new { id = actor.Id })" class="btn btn-outline-primary mb-2">
-                                    <i class="bi bi-pencil-square"></i> Edit
+                                @if (userRole == "admin")
+                                {
+                                    <a href="@Url.Action("Edit", "Actors", new { id = actor.Id })" class="btn btn-outline-primary mb-2">
+                                        <i class="bi bi-pencil-square"></i> Edit
                                     </a>
-                                <a href="@Url.Action("Delete", "Actors", new { id = actor.Id })" class="btn btn-danger text-white mb-2">
-                                    <i class="bi bi-trash"></i> Delete
+                                    <a href="@Url.Action("Delete", "Actors", new { id = actor.Id })" class="btn btn-danger text-white mb-2">
+                                        <i class="bi bi-trash"></i> Delete
                                     </a>
+                                }
+                                
                             </td>
                         </tr>
                     }

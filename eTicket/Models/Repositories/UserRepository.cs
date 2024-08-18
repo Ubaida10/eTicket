@@ -1,10 +1,11 @@
 using System.Data;
 using eTicket.Data;
+using eTicket.Models.Interfaces;
 using Microsoft.Data.SqlClient;
 
 namespace eTicket.Models.Repositories;
 
-public class UserRepository
+public class UserRepository:IUserRepository
 {
     private readonly string _connectionString;
     public UserRepository()
@@ -16,7 +17,7 @@ public class UserRepository
         DataTable usersTable = new DataTable();
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT Id, Email, Password FROM Admin";
+            string query = "SELECT * FROM Admin";
             SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
             adapter.Fill(usersTable);
         }
@@ -28,15 +29,53 @@ public class UserRepository
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Open();
-            string insertQuery = "INSERT INTO Admin (Email, Password) VALUES (@Email, @Password)";
+            string insertQuery = "INSERT INTO Admin (Email, Password, FirstName, LastName) VALUES (@Email, @Password, @FirstName, @LastName)";
             
             SqlCommand command = new SqlCommand(insertQuery, connection);
             
             
             command.Parameters.AddWithValue("@Email", register.EmailAddress);
             command.Parameters.AddWithValue("@Password", register.Password);
+            command.Parameters.AddWithValue("@FirstName", register.FirstName);
+            command.Parameters.AddWithValue("@LastName", register.LastName);
             
             command.ExecuteNonQuery();
         }
     }
+    
+    public void Edit(Register register)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            string insertQuery = "UPDATE Admin SET Email = @Email, Password = @Password, FirstName = @FirstName, LastName = @LastName WHERE Email = @Email";
+            
+            SqlCommand command = new SqlCommand(insertQuery, connection);
+            
+            
+            command.Parameters.AddWithValue("@Email", register.EmailAddress);
+            command.Parameters.AddWithValue("@Password", register.Password);
+            command.Parameters.AddWithValue("@FirstName", register.FirstName);
+            command.Parameters.AddWithValue("@LastName", register.LastName);
+            //command.Parameters.AddWithValue("@Id", register.Id);
+            
+            command.ExecuteNonQuery();
+        }
+    }
+    
+    public void Delete(string email)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            string deleteQuery = "DELETE FROM Admin WHERE Email = @Email";
+        
+            SqlCommand command = new SqlCommand(deleteQuery, connection);
+        
+            command.Parameters.AddWithValue("@Email", email);
+        
+            command.ExecuteNonQuery();
+        }
+    }
+
 }

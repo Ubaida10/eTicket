@@ -1,4 +1,5 @@
 using eTicket.Models.Entity_Classes;
+using eTicket.Models.Interfaces;
 using eTicket.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +7,16 @@ namespace eTicket.Controllers;
 
 public class CinemasController : Controller
 {
+    private readonly ICinemaRepository _cinemaRepository;
+    
+    public CinemasController(ICinemaRepository cinemaRepository)
+    {
+        _cinemaRepository = cinemaRepository;
+    }
     // GET
     public IActionResult Index()
     {
-        CinemaRepository cinemasData = new CinemaRepository();
-        var cinemas = cinemasData.GetAllCinemas();
+        var cinemas = _cinemaRepository.GetAllCinemas();
         return View(cinemas);
     }
     
@@ -32,8 +38,7 @@ public class CinemasController : Controller
     public IActionResult Details()
     {
         Cinema cinema = new Cinema();
-        CinemaRepository cinemaRepository = new CinemaRepository();
-        cinema = cinemaRepository.GetCinemaById(1);
+        cinema = _cinemaRepository.GetCinemaById(1);
         return View(cinema);
     }
 }

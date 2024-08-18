@@ -11,6 +11,7 @@ public class Login
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; }
-
+    
     public bool RememberMe { get; set; }
+    public string Role { get; set; }
 }

@@ -1,6 +1,8 @@
 @model eTicket.Models.Entity_Classes.Movie
 @{
     ViewData["Title"] = "About " + Model.Title;
+    var userRole = Context.Session.GetString("UserRole");
+    var userEmail = Context.Session.GetString("UserEmail");
 }
 
 <div class="card mb-3" style="background-color: transparent; color: white">
@@ -63,12 +65,25 @@
                         }
                     </ul>
                 </p>
-                    <div class="mt-4">
+                <div class="mt-4">
+                    @if (String.IsNullOrEmpty(userEmail))
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Login to reserve a seat</a>
+                    }
+                    else if(!String.IsNullOrEmpty(userEmail) && userRole!="admin")
+                    {
+                        <a asp-controller="Orders" asp-action="ShopingCart" asp-route-movieId="@Model.Id" class="btn btn-primary">Reserve a seat</a>
+                    }
+                </div>
+                @if (userRole == "admin")
+                {
+                    <div class="mt-4 mb-3">
                         <a asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
                         <form asp-controller="Movies" asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </div>
+                }
             </div>
         </div>
     </div>

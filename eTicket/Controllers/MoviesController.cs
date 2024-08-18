@@ -1,5 +1,6 @@
 using eTicket.Data;
 using eTicket.Models.Entity_Classes;
+using eTicket.Models.Interfaces;
 using eTicket.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,11 +9,23 @@ namespace eTicket.Controllers;
 
 public class MoviesController : Controller
 {
+    private readonly IMovieRepository _movieRepository;
+    private readonly IProducerRepository _producerRepository;
+    private readonly IActorRepository _actorRepository;
+    private readonly ICinemaRepository _cinemaRepository;
+
+    public MoviesController(IMovieRepository movieRepository, IActorRepository actorRepository, ICinemaRepository cinemaRepository, IProducerRepository producerRepository)
+    {
+        _movieRepository = movieRepository;
+        _actorRepository = actorRepository;
+        _cinemaRepository = cinemaRepository;
+        _producerRepository = producerRepository;
+    }
+
     // GET
     public IActionResult Index()
     {
-        var moviesRepo = new MovieRepository();
-        var movies = moviesRepo.GetAllMovies();
+        var movies = _movieRepository.GetAllMovies();
         return View(movies);
     }
 
@@ -20,13 +33,9 @@ public class MoviesController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        var cinemaRepo = new CinemaRepository();
-        var producersRepo = new ProducerRepository();
-        var actorsRepo = new ActorRepository();
-        
-        var cinemas = cinemaRepo.GetAllCinemas();
-        var producers = producersRepo.GetAllProducers();
-        var actors = actorsRepo.GetAllActors();
+        var cinemas = _cinemaRepository.GetAllCinemas();
+        var producers = _producerRepository.GetAllProducers();
+        var actors = _actorRepository.GetAllActors();
         
         ViewBag.Cinemas = new SelectList(cinemas, "Id", "Name");
         ViewBag.Producers = new SelectList(producers, "Id", "Name");
@@ -42,18 +51,13 @@ public class MoviesController : Controller
         if (ModelState.IsValid)
         {
             movie.Duration = new TimeSpan(movie.Hours, movie.Minutes, 0);
-            var moviesRepo = new MovieRepository();
-            moviesRepo.AddMovie(movie);
+            _movieRepository.AddMovie(movie);
             return RedirectToAction("Index");
         }
-
-        var cinemaRepo = new CinemaRepository();
-        var producersRepo = new ProducerRepository();
-        var actorsRepo = new ActorRepository();
         
-        var cinemas = cinemaRepo.GetAllCinemas();
-        var producers = producersRepo.GetAllProducers();
-        var actors = actorsRepo.GetAllActors();
+        var cinemas = _cinemaRepository.GetAllCinemas();
+        var producers = _producerRepository.GetAllProducers();
+        var actors = _actorRepository.GetAllActors();
         
         ViewBag.Cinemas = new SelectList(cinemas, "Id", "Name");
         ViewBag.Producers = new SelectList(producers, "Id", "Name");
@@ -65,17 +69,12 @@ public class MoviesController : Controller
     public IActionResult Details(int id)
     {
         Movie movie = new Movie();
-        MovieRepository movieRepository = new MovieRepository();
         movie.Cinema = new Cinema();
         movie.Producer = new Producer();
-        
-        var cinemaRepo = new CinemaRepository();
-        var producersRepo = new ProducerRepository();
-        var actorsRepo = new ActorRepository();
-        
-        movie = movieRepository.GetMovieById(id);
-        movie.Cinema = cinemaRepo.GetCinemaById(movie.CinemaId);
-        movie.Producer = producersRepo.GetProducerById(movie.ProducerId);
+
+        movie = _movieRepository.GetMovieById(id);
+        movie.Cinema = _cinemaRepository.GetCinemaById(movie.CinemaId);
+        movie.Producer = _producerRepository.GetProducerById(movie.ProducerId);
         
         return View(movie);
     }
@@ -83,21 +82,17 @@ public class MoviesController : Controller
     public IActionResult Search(string searchString)
     {
         Movie movie = new Movie();
-        MovieRepository movieRepository = new MovieRepository();
         movie.Cinema = new Cinema();
         movie.Producer = new Producer();
         
-        var cinemaRepo = new CinemaRepository();
-        var producersRepo = new ProducerRepository();
-        var actorsRepo = new ActorRepository();
         
-        movie = movieRepository.GetMovieByName(searchString);
+        movie = _movieRepository.GetMovieByName(searchString);
         if (movie == null)
         {
             return RedirectToAction("MovieNotFound");
         }
-        movie.Cinema = cinemaRepo.GetCinemaById(movie.CinemaId);
-        movie.Producer = producersRepo.GetProducerById(movie.ProducerId);
+        movie.Cinema = _cinemaRepository.GetCinemaById(movie.CinemaId);
+        movie.Producer = _producerRepository.GetProducerById(movie.ProducerId);
         
 
         return View("Details", movie);
@@ -106,8 +101,7 @@ public class MoviesController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var moviesRepo = new MovieRepository();
-        var movie = moviesRepo.GetMovieById(id);
+        var movie = _movieRepository.GetMovieById(id);
 
         var newMovie = new NewMovie();
         newMovie.Title = movie.Title;
@@ -127,14 +121,10 @@ public class MoviesController : Controller
         {
             return RedirectToAction("MovieNotFound");
         }
-
-        var cinemaRepo = new CinemaRepository();
-        var producersRepo = new ProducerRepository();
-        var actorsRepo = new ActorRepository();
-
-        ViewBag.Cinemas = new SelectList(cinemaRepo.GetAllCinemas(), "Id", "Name", movie.CinemaId);
-        ViewBag.Producers = new SelectList(producersRepo.GetAllProducers(), "Id", "Name", movie.ProducerId);
-        ViewBag.Actors = new SelectList(actorsRepo.GetAllActors(), "Id", "Name", movie.ActorId);
+        
+        ViewBag.Cinemas = new SelectList(_cinemaRepository.GetAllCinemas(), "Id", "Name", movie.CinemaId);
+        ViewBag.Producers = new SelectList(_producerRepository.GetAllProducers(), "Id", "Name", movie.ProducerId);
+        ViewBag.Actors = new SelectList(_actorRepository.GetAllActors(), "Id", "Name", movie.ActorId);
 
         return View(newMovie);
     }
@@ -145,26 +135,20 @@ public class MoviesController : Controller
         if (ModelState.IsValid)
         {
             movie.Duration = new TimeSpan(movie.Hours, movie.Minutes, 0);
-            var moviesRepo = new MovieRepository();
-            moviesRepo.UpdateMovie(movie);
+            _movieRepository.UpdateMovie(movie);
             return RedirectToAction("Index");
         }
-
-        var cinemaRepo = new CinemaRepository();
-        var producersRepo = new ProducerRepository();
-        var actorsRepo = new ActorRepository();
-
-        ViewBag.Cinemas = new SelectList(cinemaRepo.GetAllCinemas(), "Id", "Name", movie.CinemaId);
-        ViewBag.Producers = new SelectList(producersRepo.GetAllProducers(), "Id", "Name", movie.ProducerId);
-        ViewBag.Actors = new SelectList(actorsRepo.GetAllActors(), "Id", "Name", movie.ActorId);
+        
+        ViewBag.Cinemas = new SelectList(_cinemaRepository.GetAllCinemas(), "Id", "Name", movie.CinemaId);
+        ViewBag.Producers = new SelectList(_producerRepository.GetAllProducers(), "Id", "Name", movie.ProducerId);
+        ViewBag.Actors = new SelectList(_actorRepository.GetAllActors(), "Id", "Name", movie.ActorId);
 
         return View(movie);
     }
 
     public IActionResult Delete(int id)
     {
-        var moviesRepo = new MovieRepository();
-        moviesRepo.DeleteMovie(id);
+        _movieRepository.DeleteMovie(id);
         return RedirectToAction("Index");
     }
 

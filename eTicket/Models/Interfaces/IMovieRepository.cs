@@ -17,4 +17,6 @@ public interface IMovieRepository
     
     //Delete
     void DeleteMovie(int id);
+    
+    Movie GetMovieByName(string name);
 }
